@@ -1,9 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from parks.models import Park
+
 
 def home(request):
-    return render(request, "core/home.html")
+    context = {
+        "parks": Park.objects.all(),
+    }
+    return render(request, "core/home.html", context)
 
 
 def healthz(request):

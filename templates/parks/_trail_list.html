@@ -1,0 +1,12 @@
+{% if trails %}
+  <ul class="trail-list">
+    {% for trail in trails %}
+      <li>
+        <a href="{{ trail.get_absolute_url }}">{{ trail.name }}</a>
+        {% if trail.length_miles %}<span class="muted">{{ trail.length_miles }} mi</span>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="muted">No trails yet.</p>
+{% endif %}

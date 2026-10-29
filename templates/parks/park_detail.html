@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ park.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> › {{ park.name }}
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ park.name }}</h1>
+  {% if park.description %}
+    <p>{{ park.description|linebreaksbr }}</p>
+  {% endif %}
+
+  {% if park.map_pdf %}
+    <p>
+      <a class="button" href="{{ park.map_pdf.url }}" download>Download park map (PDF)</a>
+    </p>
+  {% endif %}
+
+  {# Park-wide discussion threads arrive in Phase 3. #}
+
+  <h2>Trails</h2>
+  {% if park.uses_sections %}
+    {% if sections %}
+      <nav class="section-jump" aria-label="Sections">
+        {% for section in sections %}
+          <a href="#{{ section.slug }}">{{ section.name }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+
+    {% for section in sections %}
+      <section class="trail-group" id="{{ section.slug }}">
+        <h3><a href="{{ section.get_absolute_url }}">{{ section.name }}</a></h3>
+        {% include "parks/_trail_list.html" with trails=section.trails.all %}
+      </section>
+    {% endfor %}
+
+    {% if unsectioned_trails %}
+      <section class="trail-group" id="other-trails">
+        <h3>Other trails</h3>
+        {% include "parks/_trail_list.html" with trails=unsectioned_trails %}
+      </section>
+    {% endif %}
+  {% else %}
+    {% include "parks/_trail_list.html" with trails=unsectioned_trails %}
+  {% endif %}
+{% endblock %}

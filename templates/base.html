@@ -1,13 +1,38 @@
-<!doctype html>
+{% load static %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Kephart Trail{% endblock %}</title>
+  <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+  {% block meta_description %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
 </head>
 <body>
-  <main>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="site-name" href="{% url 'core:home' %}">{{ SITE_NAME }}</a>
+      {# Search arrives in Phase 5; the box is a placeholder until then. #}
+      <form class="search" role="search">
+        <label class="visually-hidden" for="site-search">Search</label>
+        <input id="site-search" type="search" name="q" placeholder="Search (coming soon)" disabled>
+      </form>
+    </div>
+    <nav class="wrap site-nav" aria-label="Main">
+      <a href="{% url 'core:home' %}">Home</a>
+      <a href="{% url 'parks:gsmnp' %}">Smokies</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    {% block breadcrumbs %}{% endblock %}
     {% block content %}{% endblock %}
   </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>{{ SITE_NAME }} is an open-source community forum. Not affiliated with the National Park Service.</p>
+      <p>Trail conditions change. Check <a href="https://www.nps.gov/grsm/planyourvisit/conditions.htm">official NPS alerts</a> before you go.</p>
+    </div>
+  </footer>
 </body>
 </html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ trail.name }} · {{ park.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> ›
+    <a href="{{ park.get_absolute_url }}">{{ park.name }}</a> ›
+    {% if trail.section %}
+      <a href="{{ trail.section.get_absolute_url }}">{{ trail.section.name }}</a> ›
+    {% endif %}
+    {{ trail.name }}
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ trail.name }}</h1>
+  {% if trail.length_miles %}
+    <p class="muted">{{ trail.length_miles }} miles one way</p>
+  {% endif %}
+  {% if trail.description %}
+    <p>{{ trail.description|linebreaksbr }}</p>
+  {% endif %}
+
+  <section class="box" aria-labelledby="conditions-heading">
+    <h2 id="conditions-heading">Latest conditions</h2>
+    <p class="muted">No recent reports yet.</p>
+  </section>
+
+  <section aria-labelledby="thread-heading">
+    <h2 id="thread-heading">Discussion</h2>
+    {# The trail's ongoing thread arrives in Phase 3. #}
+    <p class="muted">Discussion opens soon.</p>
+  </section>
+{% endblock %}

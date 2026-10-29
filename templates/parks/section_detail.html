@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.name }} · {{ park.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> ›
+    <a href="{{ park.get_absolute_url }}">{{ park.name }}</a> ›
+    {{ section.name }}
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ section.name }}</h1>
+  {# Each trail's latest conditions date is added in Phase 4. #}
+  {% include "parks/_trail_list.html" %}
+{% endblock %}
