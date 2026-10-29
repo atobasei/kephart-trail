@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile_user.username }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="profile-header">
+    {% if profile_user.avatar %}
+      <img class="avatar avatar-large" src="{{ profile_user.avatar.url }}" alt="" width="128" height="128">
+    {% endif %}
+    <div>
+      <h1>{{ profile_user.username }}</h1>
+      <p class="muted">Joined {{ profile_user.date_joined|date:"F Y" }}</p>
+    </div>
+  </div>
+
+  {% if profile_user.bio %}
+    <p>{{ profile_user.bio|linebreaksbr }}</p>
+  {% endif %}
+
+  {% if user == profile_user %}
+    <p><a href="{% url 'accounts:settings' %}">Edit your profile</a></p>
+  {% endif %}
+
+  {# Post count and profile posts arrive in Phases 3 and 6. #}
+{% endblock %}

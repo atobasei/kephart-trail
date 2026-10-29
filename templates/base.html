@@ -6,6 +6,7 @@
   <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
   {% block meta_description %}{% endblock %}
   <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
   <header class="site-header">
@@ -20,10 +21,30 @@
     <nav class="wrap site-nav" aria-label="Main">
       <a href="{% url 'core:home' %}">Home</a>
       <a href="{% url 'parks:gsmnp' %}">Smokies</a>
+      <span class="nav-account">
+        {% if user.is_authenticated %}
+          <a href="{{ user.get_absolute_url }}">{{ user.username }}</a>
+          <a href="{% url 'accounts:settings' %}">Settings</a>
+          <form class="inline-form" method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button class="link-button" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a href="{% url 'account_login' %}">Log in</a>
+          <a href="{% url 'account_signup' %}">Sign up</a>
+        {% endif %}
+      </span>
     </nav>
   </header>
 
   <main class="wrap">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="message message-{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
     {% block breadcrumbs %}{% endblock %}
     {% block content %}{% endblock %}
   </main>

@@ -5,6 +5,10 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Our account pages first, then allauth's (login, signup, email, password).
+    path("accounts/", include("accounts.urls")),
+    path("accounts/", include("allauth.urls")),
+    path("u/", include("profiles.urls")),
     path("", include("parks.urls")),
     path("", include("core.urls")),
 ]

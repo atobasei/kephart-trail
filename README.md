@@ -31,6 +31,8 @@ docker compose exec web python manage.py createsuperuser
 
 Trails live in `data/trails/<park>.csv` with the columns `park,section,name,length_miles`, so corrections are reviewed like code. Fixing a trail name, section, or length is a good first contribution, no programming needed. Check changes against the [official NPS park map](https://www.nps.gov/grsm/planyourvisit/maps.htm) and run `import_trails --dry-run` first to catch mistakes.
 
+In development, emails (signup confirmation, password reset) aren't sent; they're printed in the terminal running the server, so copy the link from there. The signup form's bot check uses Cloudflare's always-pass test keys.
+
 No `.env` file is needed for local development. Copy `.env.example` to `.env` if you want to override anything.
 
 ## Running lint and tests natively
