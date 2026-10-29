@@ -1,0 +1,33 @@
+# Local development. Works on a fresh clone with no .env file.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: kephart
+      POSTGRES_USER: kephart
+      POSTGRES_PASSWORD: kephart
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kephart -d kephart"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  web:
+    build: .
+    environment:
+      DJANGO_SETTINGS_MODULE: kephart.settings.dev
+      DATABASE_URL: postgres://kephart:kephart@db:5432/kephart
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
