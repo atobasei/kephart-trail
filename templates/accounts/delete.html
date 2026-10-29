@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Delete account · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <h1>Delete your account</h1>
+  <p>This permanently removes your email address, bio, and profile picture, and logs you out everywhere.
+     Anything you've posted stays up but shows as "[deleted user]". You can't undo this.</p>
+
+  <form class="stacked-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="danger-button" type="submit">Delete my account</button>
+    <a href="{% url 'accounts:settings' %}">Cancel</a>
+  </form>
+{% endblock %}

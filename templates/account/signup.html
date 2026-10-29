@@ -1,0 +1,35 @@
+{% extends "account/base_entrance.html" %}
+{% comment %}
+  Copy of allauth's signup template with the Cloudflare Turnstile widget added.
+  The widget only produces a token; accounts.forms.SignupForm checks it on the server.
+{% endcomment %}
+{% load allauth i18n %}
+
+{% block head_title %}Sign up{% endblock head_title %}
+
+{% block extra_head %}
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{% endblock extra_head %}
+
+{% block content %}
+  <h1>Sign up</h1>
+  <p>Already have an account? <a href="{{ login_url }}">Log in</a>.</p>
+
+  {% url 'account_signup' as action_url %}
+  {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+    {% slot body %}
+      {% csrf_token %}
+      {% element fields form=form %}
+      {% endelement %}
+      <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+      {{ redirect_field }}
+    {% endslot %}
+    {% slot actions %}
+      {% element button tags="prominent,signup" type="submit" %}
+        Sign up
+      {% endelement %}
+    {% endslot %}
+  {% endelement %}
+
+  <p class="muted">We'll email you a link to confirm your address before you can log in.</p>
+{% endblock content %}

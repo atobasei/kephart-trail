@@ -11,6 +11,7 @@
   --link: #24577a;
   --header-bg: #2f5d3a;
   --on-accent: #ffffff;
+  --danger: #a8322d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,6 +26,7 @@
     --link: #8cc0e6;
     --header-bg: #1f3a26;
     --on-accent: #102010;
+    --danger: #e07a73;
   }
 }
 
@@ -116,7 +118,8 @@ main.wrap {
 
 .site-nav {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   padding-bottom: 0.5rem;
 }
 
@@ -208,4 +211,141 @@ main.wrap {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* Account links in the nav */
+
+.nav-account {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.inline-form {
+  display: inline;
+  margin: 0;
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: #fff;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Messages */
+
+.messages {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0;
+}
+
+.message {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-error {
+  border-left-color: var(--danger);
+}
+
+/* Forms (allauth pages and our own) */
+
+main form p {
+  margin: 0 0 1rem;
+}
+
+main label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+main input[type="text"],
+main input[type="email"],
+main input[type="password"],
+main input[type="file"],
+main textarea {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+main input[type="checkbox"] + label,
+main input[type="checkbox"] {
+  display: inline;
+  width: auto;
+}
+
+main .helptext {
+  display: block;
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.errorlist {
+  color: var(--danger);
+  padding-left: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+main button[type="submit"] {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 0;
+  border-radius: 4px;
+  padding: 0.55rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+main button[type="submit"]:hover {
+  background: var(--accent-hover);
+}
+
+main .danger-button {
+  background: var(--danger);
+  color: var(--on-accent);
+}
+
+.danger-link {
+  color: var(--danger);
+}
+
+.cf-turnstile {
+  margin-bottom: 1rem;
+}
+
+/* Profiles */
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.profile-header h1 {
+  margin: 0;
 }

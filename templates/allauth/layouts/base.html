@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% comment %}
+  Every allauth page (login, signup, password reset, email...) extends this file, so they
+  use the site's own layout instead of allauth's bare default. Their content fills the
+  "content" block from base.html.
+{% endcomment %}
+
+{% block title %}{% block head_title %}{% endblock head_title %} · {{ SITE_NAME }}{% endblock %}

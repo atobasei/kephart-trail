@@ -13,6 +13,9 @@ os.environ.setdefault("SECRET_KEY", "dev-insecure-secret-key-do-not-use-in-produ
 os.environ.setdefault("DATABASE_URL", "postgres://kephart:kephart@localhost:5432/kephart")
 os.environ.setdefault("DEBUG", "True")
 os.environ.setdefault("ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0")
+# Cloudflare's published test keys: the widget always passes and needs no account.
+os.environ.setdefault("TURNSTILE_SITE_KEY", "1x00000000000000000000AA")
+os.environ.setdefault("TURNSTILE_SECRET_KEY", "1x0000000000000000000000000000000AA")
 
 from .base import *  # noqa: E402, F403
 
