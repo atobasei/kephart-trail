@@ -15,11 +15,21 @@ cd kephart-trail
 docker compose up --build
 ```
 
+Load the GSMNP sections and trails (safe to run again after editing the CSV):
+
+```sh
+docker compose exec web python manage.py import_trails data/trails/gsmnp.csv
+```
+
 Open http://localhost:8000/. To use the admin:
 
 ```sh
 docker compose exec web python manage.py createsuperuser
 ```
+
+## Trail data
+
+Trails live in `data/trails/<park>.csv` with the columns `park,section,name,length_miles`, so corrections are reviewed like code. Fixing a trail name, section, or length is a good first contribution, no programming needed. Check changes against the [official NPS park map](https://www.nps.gov/grsm/planyourvisit/maps.htm) and run `import_trails --dry-run` first to catch mistakes.
 
 No `.env` file is needed for local development. Copy `.env.example` to `.env` if you want to override anything.
 

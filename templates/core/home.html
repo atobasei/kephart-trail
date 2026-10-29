@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Kephart Trail</h1>
-  <p>A hiking forum for Great Smoky Mountains National Park. Coming soon.</p>
+  <h1>{{ SITE_NAME }}</h1>
+  <p>A hiking forum for Great Smoky Mountains National Park: one ongoing thread per trail, with dated condition reports from people who were just there.</p>
+
+  <h2>Parks</h2>
+  {% if parks %}
+    <ul class="plain-list">
+      {% for park in parks %}
+        <li><a href="{{ park.get_absolute_url }}">{{ park.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No parks yet.</p>
+  {% endif %}
+
+  {# The General board and latest activity arrive with the forum in Phase 3. #}
 {% endblock %}

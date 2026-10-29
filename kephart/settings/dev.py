@@ -1,8 +1,14 @@
 """Local development settings. Safe defaults so a fresh clone runs without a .env file."""
 
 import os
+from pathlib import Path
 
-# Dev-only fallbacks, applied before base.py reads the environment.
+import environ
+
+# Read .env first so its values win over the fallbacks below.
+environ.Env.read_env(Path(__file__).resolve().parent.parent.parent / ".env")
+
+# Dev-only fallbacks for anything neither the environment nor .env sets.
 os.environ.setdefault("SECRET_KEY", "dev-insecure-secret-key-do-not-use-in-production")
 os.environ.setdefault("DATABASE_URL", "postgres://kephart:kephart@localhost:5432/kephart")
 os.environ.setdefault("DEBUG", "True")
