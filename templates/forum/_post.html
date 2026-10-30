@@ -1,0 +1,42 @@
+{% load forum_tags %}
+{% comment %}One post. Needs post, page_obj, thread.{% endcomment %}
+<article class="post{% if post.is_deleted %} post-deleted{% endif %}" id="post-{{ post.pk }}">
+  <header class="post-meta">
+    {% if post.author and not post.author.is_deleted %}
+      <a class="post-author" href="{{ post.author.get_absolute_url }}">{{ post.author.display_name }}</a>
+    {% else %}
+      <span class="post-author">[deleted user]</span>
+    {% endif %}
+    <a class="muted" href="{{ post.get_absolute_url }}" title="{{ post.created_at|date:'N j, Y, P' }}">
+      <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"M j, Y" }}</time>
+    </a>
+    {% if post.edited_at and not post.is_deleted %}
+      <span class="muted" title="Edited {{ post.edited_at|date:'N j, Y, P' }}">(edited)</span>
+    {% endif %}
+  </header>
+
+  {% if post.is_deleted %}
+    <p class="muted">[This post was deleted.]</p>
+  {% else %}
+    {# body_html was sanitized when the post was saved (forum/markdown.py), so it's safe to output. #}
+    <div class="post-body">{{ post.body_html|safe }}</div>
+
+    {% if user.is_authenticated %}
+      <div class="post-actions">
+        {% if not thread.is_locked %}
+          <a href="?page={{ page_obj.number }}&amp;quote={{ post.pk }}#reply">Quote</a>
+        {% endif %}
+        {% if post|editable_by:user %}
+          <a href="{% url 'forum:edit_post' post.pk %}">Edit</a>
+        {% endif %}
+        {% if post|deletable_by:user %}
+          <form class="inline-form" method="post" action="{% url 'forum:delete_post' post.pk %}"
+                data-confirm="Are you sure you want to delete this post? This action can't be undone.">
+            {% csrf_token %}
+            <button class="link-button link-button-muted" type="submit">Delete</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endif %}
+</article>

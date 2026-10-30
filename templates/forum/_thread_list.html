@@ -1,0 +1,19 @@
+{% comment %}A board's threads: pinned first, then most recent activity. Needs page_obj.{% endcomment %}
+{% if page_obj.object_list %}
+  <ul class="thread-list">
+    {% for thread in page_obj.object_list %}
+      <li>
+        <a class="thread-title" href="{{ thread.get_absolute_url }}">{% if thread.is_pinned %}<span class="badge">Pinned</span> {% endif %}{{ thread.title }}</a>
+        {% if thread.is_locked %}<span class="badge">Locked</span>{% endif %}
+        <span class="muted thread-meta">
+          {% if thread.author %}{{ thread.author.display_name }}{% else %}[deleted user]{% endif %}
+          · {{ thread.post_count }} post{{ thread.post_count|pluralize }}
+          · last post {{ thread.last_post_at|timesince }} ago
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+  {% include "forum/_pagination.html" %}
+{% else %}
+  <p class="muted">No threads yet.</p>
+{% endif %}

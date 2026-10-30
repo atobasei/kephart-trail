@@ -1,5 +1,9 @@
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
+
+from forum.helpers import handle_reply, paginate_threads, thread_page_context, visible_threads
+from forum.signals import ensure_park_board
 
 from .models import FLAGSHIP_PARK_SLUG, Park, Section, Trail
 
@@ -27,8 +31,11 @@ def park_detail(request, park_slug=FLAGSHIP_PARK_SLUG):
     else:
         unsectioned_trails = park.trails.order_by("name")
 
+    board = ensure_park_board(park)
     context = {
         "park": park,
+        "board": board,
+        "threads_page": paginate_threads(request, visible_threads(board)),
         "sections": sections,
         "unsectioned_trails": unsectioned_trails,
     }
@@ -53,6 +60,7 @@ def section_detail(request, section_slug, park_slug=FLAGSHIP_PARK_SLUG):
     return render(request, "parks/section_detail.html", context)
 
 
+@require_http_methods(["GET", "POST"])
 def trail_detail(request, trail_slug, park_slug=FLAGSHIP_PARK_SLUG):
     trail = get_object_or_404(
         Trail.objects.select_related("park", "section"),
@@ -63,8 +71,13 @@ def trail_detail(request, trail_slug, park_slug=FLAGSHIP_PARK_SLUG):
     if redirect_response is not None:
         return redirect_response
 
-    context = {
-        "park": trail.park,
-        "trail": trail,
-    }
+    # Every trail has a thread (forum/signals.py); replies are posted from this page.
+    thread = trail.thread
+    form, response = handle_reply(request, thread)
+    if response is not None:
+        return response
+
+    context = thread_page_context(request, thread, form)
+    context["park"] = trail.park
+    context["trail"] = trail
     return render(request, "parks/trail_detail.html", context)

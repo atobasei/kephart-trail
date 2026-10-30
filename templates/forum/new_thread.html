@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}New thread · {{ board.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <h1>New thread in {{ board.name }}</h1>
+  <form class="stacked-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Start thread</button>
+    <a href="{{ cancel_url }}">Cancel</a>
+  </form>
+{% endblock %}

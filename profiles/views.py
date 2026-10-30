@@ -16,5 +16,6 @@ def profile(request, username):
 
     context = {
         "profile_user": profile_user,
+        "post_count": profile_user.posts.filter(is_deleted=False).count(),
     }
     return render(request, "profiles/profile.html", context)

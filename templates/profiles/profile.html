@@ -9,7 +9,7 @@
     {% endif %}
     <div>
       <h1>{{ profile_user.username }}</h1>
-      <p class="muted">Joined {{ profile_user.date_joined|date:"F Y" }}</p>
+      <p class="muted">Joined {{ profile_user.date_joined|date:"F Y" }} · {{ post_count }} post{{ post_count|pluralize }}</p>
     </div>
   </div>
 
@@ -21,5 +21,5 @@
     <p><a href="{% url 'accounts:settings' %}">Edit your profile</a></p>
   {% endif %}
 
-  {# Post count and profile posts arrive in Phases 3 and 6. #}
+  {# Profile posts arrive in Phase 6. #}
 {% endblock %}

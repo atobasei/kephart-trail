@@ -152,3 +152,12 @@ def test_password_reset_for_unknown_email_sends_nothing_revealing(client):
     assert response.status_code == 302
     for message in mail.outbox:
         assert "/accounts/password/reset/key/" not in message.body
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("url", [SIGNUP_URL, LOGIN_URL])
+def test_login_and_signup_load_the_show_password_script(client, url):
+    html = client.get(url).content.decode()
+
+    assert 'type="password"' in html
+    assert "/static/js/site.js" in html

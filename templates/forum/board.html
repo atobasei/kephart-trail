@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ board.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> › {{ board.name }}
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <div class="heading-row">
+    <h1>{{ board.name }}</h1>
+    <a class="button" href="{% url new_thread_url %}">New thread</a>
+  </div>
+  {% if board.description %}<p>{{ board.description }}</p>{% endif %}
+  {% include "forum/_thread_list.html" %}
+{% endblock %}

@@ -28,8 +28,10 @@
   </section>
 
   <section aria-labelledby="thread-heading">
-    <h2 id="thread-heading">Discussion</h2>
-    {# The trail's ongoing thread arrives in Phase 3. #}
-    <p class="muted">Discussion opens soon.</p>
+    <h2 id="thread-heading">Trail thread</h2>
+    {% if not posts %}
+      <p class="muted">No posts yet. Hiked it lately? Tell people how it was.</p>
+    {% endif %}
+    {% include "forum/_thread_posts.html" %}
   </section>
 {% endblock %}

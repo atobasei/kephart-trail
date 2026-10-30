@@ -15,5 +15,35 @@
     <p class="muted">No parks yet.</p>
   {% endif %}
 
-  {# The General board and latest activity arrive with the forum in Phase 3. #}
+  <div class="heading-row">
+    <h2>General</h2>
+    <a href="{% url 'forum:general' %}">All threads ›</a>
+  </div>
+  {% if general_threads %}
+    <ul class="thread-list">
+      {% for thread in general_threads %}
+        <li>
+          <a class="thread-title" href="{{ thread.get_absolute_url }}">{{ thread.title }}</a>
+          <span class="muted thread-meta">{{ thread.post_count }} post{{ thread.post_count|pluralize }} · last post {{ thread.last_post_at|timesince }} ago</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No threads yet. <a href="{% url 'forum:general_new_thread' %}">Start one</a>.</p>
+  {% endif %}
+
+  <h2>Latest posts</h2>
+  {% if latest_posts %}
+    <ul class="thread-list">
+      {% for post in latest_posts %}
+        <li>
+          <a class="thread-title" href="{{ post.get_absolute_url }}">{{ post.thread.title }}</a>
+          <span class="muted thread-meta">{{ post.author_name }} · {{ post.created_at|timesince }} ago</span>
+          <span class="post-snippet">{{ post.body|truncatechars:140 }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">Nothing posted yet.</p>
+  {% endif %}
 {% endblock %}

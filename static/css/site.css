@@ -349,3 +349,128 @@ main .danger-button {
 .profile-header h1 {
   margin: 0;
 }
+
+/* Forum */
+
+.heading-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.thread-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.thread-list li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.thread-title {
+  font-weight: 600;
+}
+
+.thread-meta,
+.post-snippet {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.post-snippet {
+  color: var(--text);
+  margin-top: 0.15rem;
+  overflow-wrap: anywhere;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--muted);
+  vertical-align: middle;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: baseline;
+  margin: 1rem 0;
+}
+
+.post {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+  scroll-margin-top: 1rem;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  font-size: 0.875rem;
+}
+
+.post-author {
+  font-weight: 600;
+}
+
+.post-body {
+  overflow-wrap: anywhere;
+}
+
+.post-body blockquote {
+  margin: 0.5rem 0;
+  padding: 0.1rem 0.9rem;
+  border-left: 3px solid var(--border);
+  color: var(--muted);
+}
+
+.post-body pre {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.link-button-muted {
+  color: var(--link);
+  font-size: inherit;
+}
+
+.reply {
+  margin-top: 1.5rem;
+  scroll-margin-top: 1rem;
+}
+
+/* Text-style buttons (e.g. Delete) shouldn't look like the main submit button. */
+main button.link-button {
+  background: none;
+  padding: 0;
+  font-weight: normal;
+  color: var(--link);
+}
+
+main button.link-button:hover {
+  background: none;
+}
+
+.show-password {
+  display: block;
+  margin: 0.25rem 0 0.75rem;
+  font-weight: normal;
+}
