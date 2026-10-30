@@ -1,0 +1,28 @@
+{% comment %}
+  A thread's posts plus the reply box. Used by thread pages and trail pages.
+  Needs thread, page_obj, posts, reply_form.
+{% endcomment %}
+{% if posts %}
+  {% if page_obj.paginator.num_pages > 1 %}
+    <p><a href="?page=latest#reply">Jump to latest ›</a></p>
+  {% endif %}
+  {% for post in posts %}
+    {% include "forum/_post.html" %}
+  {% endfor %}
+  {% include "forum/_pagination.html" with anchor="" %}
+{% endif %}
+
+<section class="reply" id="reply">
+  {% if thread.is_locked %}
+    <p class="muted">This thread is locked. No new replies.</p>
+  {% elif user.is_authenticated %}
+    <h3>{% if posts %}Reply{% else %}Write the first post{% endif %}</h3>
+    <form class="stacked-form" method="post" action="{{ request.path }}#reply">
+      {% csrf_token %}
+      {{ reply_form.as_p }}
+      <button type="submit">Post reply</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'account_login' %}?next={{ request.path|urlencode }}%23reply">Log in</a> or <a href="{% url 'account_signup' %}">sign up</a> to reply.</p>
+  {% endif %}
+</section>

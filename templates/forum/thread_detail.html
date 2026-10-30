@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ thread.title }} · {{ SITE_NAME }}{% endblock %}
+
+{% block breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> ›
+    {% if board.park %}
+      <a href="{{ board.park.get_absolute_url }}#discussions">{{ board.park.name }}</a>
+    {% else %}
+      <a href="{% url 'forum:general' %}">{{ board.name }}</a>
+    {% endif %}
+    › {{ thread.title }}
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ thread.title }}</h1>
+  {% include "forum/_thread_posts.html" %}
+{% endblock %}

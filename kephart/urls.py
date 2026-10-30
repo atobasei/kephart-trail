@@ -9,6 +9,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("allauth.urls")),
     path("u/", include("profiles.urls")),
+    path("", include("forum.urls")),
     path("", include("parks.urls")),
     path("", include("core.urls")),
 ]

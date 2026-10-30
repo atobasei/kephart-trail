@@ -20,7 +20,14 @@
     </p>
   {% endif %}
 
-  {# Park-wide discussion threads arrive in Phase 3. #}
+  <section id="discussions">
+    <div class="heading-row">
+      <h2>Park discussions</h2>
+      <a class="button" href="{% if park.is_flagship %}{% url 'forum:gsmnp_new_thread' %}{% else %}{% url 'forum:park_new_thread' park.slug %}{% endif %}">New thread</a>
+    </div>
+    <p class="muted">Road closures, permits, trip planning. For one trail, post on its trail page below.</p>
+    {% include "forum/_thread_list.html" with page_obj=threads_page anchor="discussions" %}
+  </section>
 
   <h2>Trails</h2>
   {% if park.uses_sections %}

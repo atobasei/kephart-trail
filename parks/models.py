@@ -10,7 +10,7 @@ from .validators import validate_pdf
 FLAGSHIP_PARK_SLUG = "gsmnp"
 
 # Section slugs share the URL space under /gsmnp/ with these fixed paths.
-RESERVED_SECTION_SLUGS = {"trails", "t"}
+RESERVED_SECTION_SLUGS = {"trails", "t", "new"}
 
 
 class Park(models.Model):
@@ -111,7 +111,7 @@ class Trail(models.Model):
         help_text="One-way length in miles.",
     )
     description = models.TextField(blank=True)
-    # The one-to-one link to the trail's thread is added in Phase 3 with the Thread model.
+    # The trail's ongoing thread is forum.Thread.trail (reach it as trail.thread).
 
     class Meta:
         ordering = ["name"]
